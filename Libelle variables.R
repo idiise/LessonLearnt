@@ -40,3 +40,11 @@
 
 # Condiments --------------------------------------------------------------
 # FCSCond Condiments
+
+# ***************************************************************************************************
+
+# Stratégies de moyens d'existences ---------------------------------------
+
+#  4 stratégies de stress
+#  3 Stratégies de crise
+#  3 Stratégies d'urgence

@@ -84,6 +84,45 @@ Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>%
 
 funModeling::freq(Base_menagePDM1_Conjoint_2017, "FCSCat28")
 
-# Partie Stratégies d'adaptation aux moyens d'existence -------------------
+# Partie Stratégies d'adaptation aux moyens d'existence LHCS -------------------
 
+#  stratégies de stress
+Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>% mutate( stress_coping =
+  case_when(
+    ss9x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+    ss13x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+    ss15x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+    ss17x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+    ss19x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+    TRUE ~  "Non"
+  ))
 
+#  stratégies de crise
+Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>% mutate(crisis_coping = 
+  case_when(
+    ss10x1 %in% c("Oui") ~ "Oui",
+    ss11x1 %in% c("Oui") ~ "Oui",
+    ss12x1 %in% c("Oui") ~ "Oui",
+    TRUE ~ "Non"
+  )
+)
+#  stratégies d'urgence
+Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>% mutate(emergency_coping =
+   case_when(
+     ss8x1 %in% c("Oui") ~ "Oui",
+     ss14x1 %in% c("Oui") ~ "Oui",
+     ss16x1 %in% c("Oui") ~ "Oui",
+     ss18x1 %in% c("Oui") ~ "Oui",
+     TRUE ~ "Non"
+   )
+)
+
+Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>% mutate(LhCSICat = case_when(
+  emergency_coping == "Oui" ~ "StrategiesdeUrgence",
+  crisis_coping == "Oui" ~ "StrategiesdeCrise",
+  stress_coping == "Oui" ~ "StrategiesdeStress",
+  TRUE ~ "Pasdestrategies"))
+
+funModeling::freq(Base_menagePDM1_Conjoint_2017, "LhCSICat")
+
+Base_menagePDM1_Conjoint_2017 <- Base_menagePDM1_Conjoint_2017 %>% select(-c(LhCSICat, emergency_coping, crisis_coping, stress_coping))
