@@ -68,3 +68,49 @@ funModeling::freq(BasePDM1CoinjointSoudure2018_Menage, "FCSCat28")
 # Acceptable = 46.73
 # Limite =  30.95
 # Pauvre = 22.33
+
+# LHCS PDM1 2018 ----------------------------------------------------------
+
+#  stratégies de stress
+BasePDM1CoinjointSoudure2018_Menage <- BasePDM1CoinjointSoudure2018_Menage %>% mutate( stress_coping =
+                                                                             case_when(
+                                                                               ss9x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+                                                                               ss13x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+                                                                               ss15x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+                                                                               ss17x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+                                                                               ss19x1 %in% c("Oui","Non, parce que j’ai déjà vendu ces actifs ou mené cette activité au cours des 12 derniers mois et je ne peux pas c") ~ "Oui",
+                                                                               TRUE ~  "Non"
+                                                                             ))
+
+#  stratégies de crise
+BasePDM1CoinjointSoudure2018_Menage <- BasePDM1CoinjointSoudure2018_Menage %>% mutate(crisis_coping = 
+                                                                            case_when(
+                                                                              ss10x1 %in% c("Oui") ~ "Oui",
+                                                                              ss11x1 %in% c("Oui") ~ "Oui",
+                                                                              ss12x1 %in% c("Oui") ~ "Oui",
+                                                                              TRUE ~ "Non"
+                                                                            )
+)
+#  stratégies d'urgence
+BasePDM1CoinjointSoudure2018_Menage <- BasePDM1CoinjointSoudure2018_Menage %>% mutate(emergency_coping =
+                                                                            case_when(
+                                                                              ss8x1 %in% c("Oui") ~ "Oui",
+                                                                              ss14x1 %in% c("Oui") ~ "Oui",
+                                                                              ss16x1 %in% c("Oui") ~ "Oui",
+                                                                              ss18x1 %in% c("Oui") ~ "Oui",
+                                                                              TRUE ~ "Non"
+                                                                            )
+)
+
+BasePDM1CoinjointSoudure2018_Menage <- BasePDM1CoinjointSoudure2018_Menage %>% mutate(LhCSICat = case_when(
+  emergency_coping == "Oui" ~ "StrategiesdeUrgence",
+  crisis_coping == "Oui" ~ "StrategiesdeCrise",
+  stress_coping == "Oui" ~ "StrategiesdeStress",
+  TRUE ~ "Pasdestrategies"))
+
+funModeling::freq(BasePDM1CoinjointSoudure2018_Menage, "LhCSICat")
+
+# stress =  12.66
+# crise = 0.7
+# urgences = 11.43
+# neutres = 75.21
