@@ -219,4 +219,4 @@ funModeling::freq(BasePDM2CoinjointSoudure2018_Menage, "LhCSICat")
 # stress =  
 # crise = 
 # urgences = 
-# neutres = 
+# neutres = 75.21
